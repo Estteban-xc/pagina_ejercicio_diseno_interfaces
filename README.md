@@ -1,1 +1,1 @@
-# pagina_ejercicio_dise-o_interfaces
+# pagina_ejercicio_diseño_interfaces
