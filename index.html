@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VisualCraft — Diseño & Expresión</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@200;300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --coral:     #D85A30;
+      --coral-lt:  #FAECE7;
+      --teal:      #1D9E75;
+      --teal-lt:   #E1F5EE;
+      --purple:    #534AB7;
+      --purple-lt: #EEEDFE;
+      --dark:      #2C2C2A;
+      --mid:       #5F5E5A;
+      --light:     #F1EFE8;
+      --white:     #ffffff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    /* NAV */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid #D3D1C7;
+      padding: 1rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-logo-text { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; letter-spacing: 4px; color: var(--dark); text-transform: uppercase; }
+    .nav-logo-sub  { font-size: 0.62rem; color: var(--mid); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 200; }
+    nav ul { list-style: none; display: flex; gap: 2rem; margin-left: auto; }
+    nav ul a { text-decoration: none; font-size: 0.85rem; color: var(--mid); transition: color 0.2s; }
+    nav ul a:hover { color: var(--coral); }
+
+    /* HERO */
+    .hero {
+      background: var(--white);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid #D3D1C7;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--coral-lt);
+      color: var(--coral);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 1.1rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.15;
+      max-width: 680px;
+      margin: 0 auto 1rem;
+    }
+    .hero p {
+      font-size: 1rem;
+      color: var(--mid);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* SECCIONES */
+    .section-wrap { max-width: 1100px; margin: 0 auto; padding: 4.5rem 2rem; }
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .section-desc {
+      font-size: 0.9rem;
+      color: var(--mid);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      max-width: 540px;
+      line-height: 1.7;
+    }
+    .divider { height: 1px; background: #D3D1C7; max-width: 1100px; margin: 0 auto; }
+
+    /* IMÁGENES */
+    .images-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; }
+    .img-card { background: var(--white); border: 1px solid #D3D1C7; border-radius: 14px; overflow: hidden; }
+    .img-card img { width: 100%; height: 210px; object-fit: cover; display: block; }
+    .img-info { padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; }
+    .img-name { font-size: 0.875rem; color: var(--mid); font-weight: 300; }
+    .format-badge { font-family: 'Space Mono', monospace; font-size: 0.68rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .badge-jpg  { background: #B5D4F4; color: #0C447C; }
+    .badge-png  { background: #9FE1CB; color: #085041; }
+    .badge-webp { background: #FAC775; color: #633806; }
+
+    /* COLORES */
+    .colors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.5rem; }
+    .color-card { border-radius: 14px; overflow: hidden; border: 1px solid #D3D1C7; background: var(--white); }
+    .color-swatch { height: 130px; position: relative; }
+    .color-hex-overlay { position: absolute; bottom: 10px; left: 14px; font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.85); letter-spacing: 0.05em; }
+    .color-info { padding: 1rem 1.1rem; }
+    .color-name { font-weight: 600; font-size: 1rem; margin-bottom: 0.1rem; }
+    .color-role { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .color-desc { font-size: 0.82rem; color: var(--mid); line-height: 1.6; font-weight: 300; }
+
+    /* TIPOGRAFÍAS */
+    .typo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; }
+    .typo-card { background: var(--white); border: 1px solid #D3D1C7; border-radius: 14px; padding: 2rem; position: relative; overflow: hidden; }
+    .typo-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+    .typo-card.t1::before { background: var(--coral); }
+    .typo-card.t2::before { background: var(--teal); }
+    .typo-card.t3::before { background: var(--purple); }
+    .typo-tag { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--mid); margin-bottom: 1rem; }
+    .sample-playfair { font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 700; color: var(--dark); line-height: 1.15; margin-bottom: 1rem; }
+    .sample-inter    { font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--dark); line-height: 1.75; font-weight: 300; margin-bottom: 1rem; }
+    .sample-mono     { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--purple); line-height: 1.7; margin-bottom: 1rem; }
+    .typo-name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+    .typo-use  { font-size: 0.8rem; color: var(--mid); margin-top: 0.25rem; font-weight: 300; line-height: 1.5; }
+
+    /* LOGO */
+    .logo-outer { background: var(--white); border: 1px solid #D3D1C7; border-radius: 18px; overflow: hidden; }
+
+    .logo-previews { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #D3D1C7; }
+    @media(max-width:600px){ .logo-previews { grid-template-columns: 1fr; } }
+
+    .logo-preview-light {
+      background: #F8F7F3;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 3rem 2rem; gap: 1rem;
+      border-right: 1px solid #D3D1C7;
+    }
+    .logo-preview-dark {
+      background: #1E1E1C;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 3rem 2rem; gap: 1rem;
+    }
+    .logo-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 300; margin-top: 0.5rem; }
+    .logo-label-light { color: #B4B2A9; }
+    .logo-label-dark  { color: #5F5E5A; }
+    .logo-wordmark-light { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.1rem; letter-spacing: 5px; color: #2C2C2A; text-transform: uppercase; }
+    .logo-wordmark-dark  { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.1rem; letter-spacing: 5px; color: #F8F7F3; text-transform: uppercase; }
+    .logo-tagline-light  { font-family: 'Inter', sans-serif; font-weight: 200; font-size: 0.62rem; letter-spacing: 8px; color: #888780; text-transform: uppercase; }
+    .logo-tagline-dark   { font-family: 'Inter', sans-serif; font-weight: 200; font-size: 0.62rem; letter-spacing: 8px; color: #5F5E5A; text-transform: uppercase; }
+
+    .logo-divline-light { width: 120px; height: 0.7px; background: #D3D1C7; margin: 6px auto; }
+    .logo-divline-dark  { width: 120px; height: 0.7px; background: #3A3A38; margin: 6px auto; }
+
+    /* Explicación */
+    .logo-explanation { display: grid; grid-template-columns: 1fr 1fr; }
+    @media(max-width:700px){ .logo-explanation { grid-template-columns: 1fr; } }
+
+    .logo-explain-block { padding: 2.5rem; border-right: 1px solid #D3D1C7; }
+    .logo-explain-block:last-child { border-right: none; }
+
+    .explain-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 1.5rem; }
+
+    .color-explain-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #F1EFE8; }
+    .color-explain-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .color-dot-big     { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; margin-top: 2px; }
+    .color-dot-outline { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--dark); flex-shrink: 0; margin-top: 2px; }
+    .cei-name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+    .cei-hex  { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--mid); margin: 0.15rem 0 0.35rem; }
+    .cei-desc { font-size: 0.82rem; color: var(--mid); line-height: 1.6; font-weight: 300; }
+
+    .element-explain-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid #F1EFE8; }
+    .element-explain-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .elem-icon { width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .elem-name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+    .elem-desc { font-size: 0.82rem; color: var(--mid); line-height: 1.6; font-weight: 300; margin-top: 0.2rem; }
+
+    .logo-meaning-full { padding: 2.5rem; border-top: 1px solid #D3D1C7; background: var(--light); }
+    .meaning-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 0.75rem; }
+    .meaning-text { font-size: 0.9rem; color: var(--mid); line-height: 1.9; font-weight: 300; max-width: 900px; }
+    .meaning-text strong { font-weight: 600; color: var(--dark); }
+
+    /* FOOTER */
+    footer { background: var(--dark); color: #888780; text-align: center; padding: 2.5rem 1rem; font-size: 0.82rem; margin-top: 5rem; }
+    footer strong { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1rem; }
+    footer p + p { margin-top: 0.4rem; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg width="36" height="24" viewBox="0 0 72 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2,23 Q36,1 70,23" fill="#D85A30"/>
+      <path d="M2,23 Q36,45 70,23" fill="#2C2C2A"/>
+      <circle cx="36" cy="23" r="12" fill="#1D9E75"/>
+      <circle cx="36" cy="23" r="6.5" fill="#2C2C2A"/>
+      <circle cx="40" cy="19" r="2.8" fill="#F8F7F3"/>
+      <path d="M14,10 Q36,1 58,10" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <div class="nav-logo-text">VISUALCRAFT</div>
+      <div class="nav-logo-sub">Diseño &amp; Expresión</div>
+    </div>
+  </div>
+  <ul>
+    <li><a href="#imagenes">Imágenes</a></li>
+    <li><a href="#colores">Colores</a></li>
+    <li><a href="#tipografias">Tipografías</a></li>
+    <li><a href="#logo">Logotipo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Proyecto de diseño visual</div>
+  <h1>Exploración de elementos gráficos</h1>
+  <p>Una vitrina de imágenes, paletas de color, tipografías y un logotipo diseñado con intención y significado.</p>
+</div>
+
+
+<!-- SECCIÓN 1: IMÁGENES -->
+<section id="imagenes">
+  <div class="section-wrap">
+    <div class="section-eyebrow">01 — Formatos de imagen</div>
+    <div class="section-title">Tres formatos visuales</div>
+    <p class="section-desc">Las imágenes digitales existen en distintos formatos, cada uno con características técnicas propias. Aquí se muestran tres de los más usados en la web.</p>
+    <div class="images-grid">
+      <div class="img-card">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Montaña JPG"/>
+        <div class="img-info">
+          <span class="img-name">Paisaje de montaña</span>
+          <span class="format-badge badge-jpg">JPG</span>
+        </div>
+      </div>
+      <div class="img-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png"
+             alt="Transparencia PNG"
+             style="object-fit:contain; background:#e8e8e8; height:210px; width:100%;"/>
+        <div class="img-info">
+          <span class="img-name">Imagen con transparencia</span>
+          <span class="format-badge badge-png">PNG</span>
+        </div>
+      </div>
+      <div class="img-card">
+        <img src="https://www.gstatic.com/webp/gallery/1.webp"
+             alt="Foto WebP"
+             onerror="this.src='https://images.unsplash.com/photo-1518791841217-8f162f1912da?w=600&q=80'"/>
+        <div class="img-info">
+          <span class="img-name">Fotografía en WebP</span>
+          <span class="format-badge badge-webp">WEBP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECCIÓN 2: COLORES -->
+<section id="colores">
+  <div class="section-wrap">
+    <div class="section-eyebrow">02 — Paleta cromática</div>
+    <div class="section-title">Tres colores, un sistema</div>
+    <p class="section-desc">Cada color fue elegido con propósito. Juntos crean armonía visual, contraste y jerarquía a lo largo de toda la página.</p>
+    <div class="colors-grid">
+      <div class="color-card">
+        <div class="color-swatch" style="background:#D85A30;"><div class="color-hex-overlay">#D85A30</div></div>
+        <div class="color-info">
+          <div class="color-name" style="color:#D85A30;">Coral</div>
+          <div class="color-role" style="color:#D85A30;">Color principal</div>
+          <div class="color-desc">Transmite energía, acción y creatividad. Es el color dominante de la marca: aparece en el logotipo, títulos y elementos de acento más importantes de la página.</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#1D9E75;"><div class="color-hex-overlay">#1D9E75</div></div>
+        <div class="color-info">
+          <div class="color-name" style="color:#1D9E75;">Teal</div>
+          <div class="color-role" style="color:#1D9E75;">Color secundario</div>
+          <div class="color-desc">Evoca equilibrio, frescura y crecimiento. Forma el iris del logotipo y aparece en elementos de apoyo, generando un contraste fresco y armonioso con el coral.</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#534AB7;"><div class="color-hex-overlay">#534AB7</div></div>
+        <div class="color-info">
+          <div class="color-name" style="color:#534AB7;">Púrpura</div>
+          <div class="color-role" style="color:#534AB7;">Color de acento</div>
+          <div class="color-desc">Simboliza profundidad, inteligencia y detalle. Aparece en tipografía técnica, badges y en el trazo exterior del logo, añadiendo sofisticación al conjunto.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECCIÓN 3: TIPOGRAFÍAS -->
+<section id="tipografias">
+  <div class="section-wrap">
+    <div class="section-eyebrow">03 — Sistema tipográfico</div>
+    <div class="section-title">Tres familias con propósito</div>
+    <p class="section-desc">Cada tipografía cumple un rol específico dentro de la jerarquía visual. Su combinación equilibra elegancia, legibilidad y personalidad técnica.</p>
+    <div class="typo-grid">
+      <div class="typo-card t1">
+        <div class="typo-tag">Tipografía 01 · Serif display</div>
+        <div class="sample-playfair">Diseño que<br>cuenta historias.</div>
+        <div class="typo-name">Playfair Display</div>
+        <div class="typo-use">Uso: Títulos principales y encabezados de sección. Su carácter serif elegante aporta personalidad editorial y jerarquía visual clara. Ideal para momentos de alto impacto.</div>
+      </div>
+      <div class="typo-card t2">
+        <div class="typo-tag">Tipografía 02 · Sans-serif</div>
+        <div class="sample-inter">La tipografía sans-serif garantiza legibilidad máxima en cuerpos de texto. Su trazo limpio y abierto facilita la lectura en pantallas de todos los tamaños, sin cansar al ojo.</div>
+        <div class="typo-name">Inter</div>
+        <div class="typo-use">Uso: Párrafos, navegación, botones y texto de interfaz. Diseñada específicamente para pantallas digitales, es el pilar de legibilidad de toda la página.</div>
+      </div>
+      <div class="typo-card t3">
+        <div class="typo-tag">Tipografía 03 · Monoespaciada</div>
+        <div class="sample-mono">
+          font-family: Space Mono;<br>
+          font-weight: 700;<br>
+          color: #534AB7;<br>
+          letter-spacing: 0.05em;<br>
+          uso: técnico &amp; distintivo;
+        </div>
+        <div class="typo-name">Space Mono</div>
+        <div class="typo-use">Uso: Etiquetas de formato, badges, código y detalles técnicos. Su ritmo mecánico le da un carácter moderno y tecnológico que complementa las otras dos fuentes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECCIÓN 4: LOGO -->
+<section id="logo">
+  <div class="section-wrap">
+    <div class="section-eyebrow">04 — Identidad visual</div>
+    <div class="section-title">El logotipo de VisualCraft</div>
+    <p class="section-desc">Un ojo creativo construido con geometría pura. Minimalista, moderno y profundamente ligado al significado de la marca: ver, crear y expresar.</p>
+
+    <div class="logo-outer">
+
+      <!-- Preview clara y oscura -->
+      <div class="logo-previews">
+        <div class="logo-preview-light">
+          <svg width="180" height="116" viewBox="0 0 180 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4,58 Q90,4 176,58" fill="#D85A30"/>
+            <path d="M4,58 Q90,112 176,58" fill="#2C2C2A"/>
+            <circle cx="90" cy="58" r="30" fill="#1D9E75"/>
+            <circle cx="90" cy="58" r="16" fill="#2C2C2A"/>
+            <circle cx="100" cy="48" r="7" fill="#F8F7F3"/>
+            <line x1="4" y1="58" x2="176" y2="58" stroke="#F8F7F3" stroke-width="1.2"/>
+            <line x1="4"   y1="58" x2="-6"  y2="46" stroke="#D85A30" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="4"   y1="58" x2="-8"  y2="61" stroke="#D85A30" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="176" y1="58" x2="186" y2="46" stroke="#D85A30" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="176" y1="58" x2="188" y2="61" stroke="#D85A30" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M30,30 Q90,4 150,30" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <div style="text-align:center;">
+            <div class="logo-wordmark-light">VISUALCRAFT</div>
+            <div class="logo-divline-light"></div>
+            <div class="logo-tagline-light">DISEÑO · EXPRESIÓN</div>
+          </div>
+          <div class="logo-label logo-label-light">versión clara</div>
+        </div>
+
+        <div class="logo-preview-dark">
+          <svg width="180" height="116" viewBox="0 0 180 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4,58 Q90,4 176,58" fill="#D85A30"/>
+            <path d="M4,58 Q90,112 176,58" fill="#3A3A38"/>
+            <circle cx="90" cy="58" r="30" fill="#1D9E75"/>
+            <circle cx="90" cy="58" r="16" fill="#1E1E1C"/>
+            <circle cx="100" cy="48" r="7" fill="#F8F7F3" opacity="0.18"/>
+            <line x1="4" y1="58" x2="176" y2="58" stroke="#1E1E1C" stroke-width="1.2"/>
+            <line x1="4"   y1="58" x2="-6"  y2="46" stroke="#D85A30" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="4"   y1="58" x2="-8"  y2="61" stroke="#D85A30" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="176" y1="58" x2="186" y2="46" stroke="#D85A30" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="176" y1="58" x2="188" y2="61" stroke="#D85A30" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M30,30 Q90,4 150,30" fill="none" stroke="#534AB7" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <div style="text-align:center;">
+            <div class="logo-wordmark-dark">VISUALCRAFT</div>
+            <div class="logo-divline-dark"></div>
+            <div class="logo-tagline-dark">DISEÑO · EXPRESIÓN</div>
+          </div>
+          <div class="logo-label logo-label-dark">versión oscura</div>
+        </div>
+      </div>
+
+      <!-- Explicación colores + elementos -->
+      <div class="logo-explanation">
+
+        <div class="logo-explain-block">
+          <div class="explain-title">Colores del logotipo</div>
+
+          <div class="color-explain-item">
+            <div class="color-dot-big" style="background:#D85A30;"></div>
+            <div>
+              <div class="cei-name">Coral — #D85A30</div>
+              <div class="cei-hex">Color principal · Párpado superior y destellos</div>
+              <div class="cei-desc">Es el color más dominante del logo. El gran arco coral superior representa la energía creativa que se abre hacia el mundo: atención, acción y pasión por el diseño. Vibrante sin ser agresivo, captura la mirada al instante.</div>
+            </div>
+          </div>
+
+          <div class="color-explain-item">
+            <div class="color-dot-big" style="background:#1D9E75;"></div>
+            <div>
+              <div class="cei-name">Teal — #1D9E75</div>
+              <div class="cei-hex">Color secundario · Iris del ojo</div>
+              <div class="cei-desc">El iris es lo que da identidad a una mirada. El teal aquí representa equilibrio, foco y crecimiento: la capacidad de ver con claridad y generar ideas con intención. Contrasta de forma armoniosa con el coral sin competir con él.</div>
+            </div>
+          </div>
+
+          <div class="color-explain-item">
+            <div class="color-dot-big" style="background:#534AB7;"></div>
+            <div>
+              <div class="cei-name">Púrpura — #534AB7</div>
+              <div class="cei-hex">Color de acento · Arco exterior superior</div>
+              <div class="cei-desc">El trazo púrpura es el detalle más sutil del logo. Representa la profundidad intelectual detrás de cada decisión de diseño: la capa de pensamiento que no siempre se ve a primera vista, pero que siempre está presente.</div>
+            </div>
+          </div>
+
+          <div class="color-explain-item">
+            <div class="color-dot-outline"></div>
+            <div>
+              <div class="cei-name">Oscuro — #2C2C2A</div>
+              <div class="cei-hex">Neutro · Párpado inferior y pupila</div>
+              <div class="cei-desc">El oscuro ancla todo el conjunto. Aporta contraste, peso visual y seriedad. La pupila oscura convierte la forma geométrica abstracta en algo inmediatamente reconocible: un ojo que observa, piensa y crea.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="logo-explain-block">
+          <div class="explain-title">Elementos del logotipo</div>
+
+          <div class="element-explain-item">
+            <div class="elem-icon" style="background:#FAECE7;">
+              <svg width="20" height="12" viewBox="0 0 20 12"><path d="M1,10 Q10,1 19,10" fill="#D85A30"/></svg>
+            </div>
+            <div>
+              <div class="elem-name">Arco superior coral — el párpado abierto</div>
+              <div class="elem-desc">Una curva suave y amplia que define la forma del ojo. Simboliza apertura creativa y atención plena. Es el primer elemento que el ojo humano detecta al ver el logo, porque está en la parte superior y tiene el color más cálido.</div>
+            </div>
+          </div>
+
+          <div class="element-explain-item">
+            <div class="elem-icon" style="background:#2C2C2A;">
+              <svg width="20" height="12" viewBox="0 0 20 12"><path d="M1,1 Q10,10 19,1" fill="#5F5E5A"/></svg>
+            </div>
+            <div>
+              <div class="elem-name">Arco inferior oscuro — el peso visual</div>
+              <div class="elem-desc">Espeja el arco superior para cerrar la forma del ojo. Su tono oscuro genera profundidad y contraste, haciendo que el iris teal resalte con mayor fuerza sobre el fondo. Sin este arco, el logo pierde su solidez y equilibrio.</div>
+            </div>
+          </div>
+
+          <div class="element-explain-item">
+            <div class="elem-icon" style="background:#E1F5EE;">
+              <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#1D9E75"/><circle cx="10" cy="10" r="4" fill="#085041"/><circle cx="13" cy="7" r="2" fill="white"/></svg>
+            </div>
+            <div>
+              <div class="elem-name">Círculo teal — el iris y la pupila</div>
+              <div class="elem-desc">Es el corazón del logo. El iris es la parte más distintiva de cualquier ojo y aquí toma el color teal para representar visión enfocada y creatividad. La pupila oscura interior convierte la forma abstracta en un ojo real y expresivo.</div>
+            </div>
+          </div>
+
+          <div class="element-explain-item">
+            <div class="elem-icon" style="background:#EEEDFE;">
+              <svg width="20" height="10" viewBox="0 0 20 10"><path d="M2,8 Q10,1 18,8" fill="none" stroke="#534AB7" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <div class="elem-name">Arco púrpura — el detalle elegante</div>
+              <div class="elem-desc">Una línea curva muy fina que corona el conjunto por encima del párpado coral. Es el elemento más pequeño pero más sofisticado: añade capas de lectura, elegancia y es lo que diferencia este logo de uno genérico.</div>
+            </div>
+          </div>
+
+          <div class="element-explain-item">
+            <div class="elem-icon" style="background:#F8F7F3; border: 1px solid #D3D1C7;">
+              <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="13" cy="7" r="5" fill="white" opacity="0.9"/></svg>
+            </div>
+            <div>
+              <div class="elem-name">Brillo blanco — la chispa creativa</div>
+              <div class="elem-desc">Un pequeño círculo descentrado dentro de la pupila, ligeramente hacia arriba. Este detalle es lo que da vida a cualquier ojo ilustrado: sin el brillo, la mirada está apagada. Aquí representa la chispa de inspiración y la luz de la creatividad.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Significado global -->
+      <div class="logo-meaning-full">
+        <div class="meaning-title">Significado general del logotipo</div>
+        <p class="meaning-text">
+          El logo de <strong>VisualCraft</strong> es un <strong>ojo geométrico construido con curvas puras</strong>, sin adornos innecesarios. La elección del ojo como símbolo central no es casual: en el mundo del diseño, <strong>todo comienza por la mirada</strong>. Ver antes de crear, observar antes de expresar, analizar antes de ejecutar. El ojo representa exactamente lo que hace VisualCraft — <strong>mirar el mundo con criterio visual y traducirlo en diseño con intención</strong>.
+          <br><br>
+          La geometría limpia del logo transmite <strong>modernidad y pensamiento tecnológico</strong>, mientras que la combinación de tres colores crea una paleta que es simultáneamente <strong>enérgica, equilibrada y sofisticada</strong>: el coral impulsa la acción, el teal aporta foco y el púrpura añade profundidad intelectual. Es un logo que funciona en cualquier tamaño y sobre cualquier fondo, y que comunica su significado <strong>con una sola mirada</strong>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>VisualCraft</strong></p>
+  <p>Diseño &amp; Expresión Visual · Proyecto académico</p>
+  <p style="margin-top:0.75rem; font-size:0.72rem; color:#5F5E5A;">Tipografías: Playfair Display · Inter · Space Mono &nbsp;|&nbsp; Colores: Coral · Teal · Púrpura</p>
+</footer>
+
+</body>
+</html>
